@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../css/main.css"/>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <div><a class="navbar-brand" style="font-size:32px;" href="#">“伴我汽车”管理平台</a></div>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li style="padding-top:8px;">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-success dropdown-toggle" data-toggle="dropdown">
+                            <i class="glyphicon glyphicon-user"></i><span><td th:text="${session.username}"> 张三</td></span> <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#"><i class="glyphicon glyphicon-cog"></i> 个人设置</a></li>
+                            <li><a href="#"><i class="glyphicon glyphicon-comment"></i> 消息</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li style="margin-left:10px;padding-top:8px;">
+                    <button type="button" class="btn btn-default btn-danger">
+                        <span class="glyphicon glyphicon-question-sign"></span> 帮助
+                    </button>
+                </li>
+            </ul>
+            <form class="navbar-form navbar-right">
+                <input type="text" class="form-control" placeholder="查询"/>
+            </form>
+        </div>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <div class="tree">
+                <ul style="padding-left:0px;" class="list-group">
+                    <li class="list-group-item tree-closed">
+                        <span>会员管理 <span class="badge" style="float:right">1</span></span>
+                        <ul style="margin-top:10px;display:none;">
+                            <li style="height:30px;">
+                                <a href="#">会员管理</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="list-group-item tree-closed">
+                        <span> 资讯管理 <span class="badge" style="float:right">4</span></span>
+                        <ul style="margin-top:10px;display:none;">
+                            <li style="height:30px;">
+                                <a href="#"> 草稿箱</a>
+                            </li>
+                            <li style="height:30px;">
+                                <a href="#"> 资讯审核</a>
+                            </li>
+                            <li style="height:30px;">
+                                <a href="permission.html"> 资讯发布</a>
+                            </li>
+                            <li style="height:30px;">
+                                <a href="permission.html"> 资讯列表</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="list-group-item tree-closed">
+                        <span>标签定义 <span class="badge" style="float:right">1</span></span>
+                        <ul style="margin-top:10px;display:none;">
+                            <li style="height:30px;">
+                                <a href="#">标签定义</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="list-group-item tree-closed">
+                        <span> 车型库管理 <span class="badge" style="float:right">5</span></span>
+                        <ul style="margin-top:10px;display:none;">
+                            <li style="height:30px;">
+                                <a href="#">品牌管理</a>
+                            </li>
+                            <li style="height:30px;">
+                                <a href="#"> 厂商管理</a>
+                            </li>
+                            <li style="height:30px;">
+                                <a href="#"> 车系管理</a>
+                            </li>
+                            <li style="height:30px;">
+                                <a href="#">车款管理</a>
+                            </li>
+                            <li style="height:30px;">
+                                <a href="#">参数管理</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="list-group-item tree-closed">
+                        <span>自有商品管理 <span class="badge" style="float:right">1</span></span>
+                        <ul style="margin-top:10px;display:none;">
+                            <li style="height:30px;">
+                                <a href="#">自有商品管理</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="list-group-item tree-closed">
+                        <span>活动管理 <span class="badge" style="float:right">4</span></span>
+                        <ul style="margin-top:10px;display:none;">
+                            <li style="height:30px;">
+                                <a href="/zizhiweihu">活动列表</a>
+                            </li>
+                            <li style="height:30px;">
+                                <a href="/fenleiguanli">推荐活动</a>
+                            </li>
+                            <li style="height:30px;">
+                                <a href="process.html">类型管理</a>
+                            </li>
+                            <li style="height:30px;">
+                                <a href="advertisement.html">渠道管理</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="list-group-item tree-closed">
+                        <span>消息管理 <span class="badge" style="float:right">1</span></span>
+                        <ul style="margin-top:10px;display:none;">
+                            <li style="height:30px;">
+                                <a href="#">消息管理</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="list-group-item tree-closed">
+                        <span>标签管理 <span class="badge" style="float:right">1</span></span>
+                        <ul style="margin-top:10px;display:none;">
+                            <li style="height:30px;">
+                                <a href="#">标签管理</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="list-group-item tree-closed">
+                        <span>角色管理 <span class="badge" style="float:right">1</span></span>
+                        <ul style="margin-top:10px;display:none;">
+                            <li style="height:30px;">
+                                <a href="#">角色管理</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="list-group-item tree-closed">
+                        <span>管理员列表 <span class="badge" style="float:right">1</span></span>
+                        <ul style="margin-top:10px;display:none;">
+                            <li style="height:30px;">
+                                <a href="#">管理员列表</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="list-group-item tree-closed">
+                        <span>操作日志 <span class="badge" style="float:right">1</span></span>
+                        <ul style="margin-top:10px;display:none;">
+                            <li style="height:30px;">
+                                <a href="#">操作日志</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="list-group-item tree-closed">
+                        <span>个人中心 <span class="badge" style="float:right">1</span></span>
+                        <ul style="margin-top:10px;display:none;">
+                            <li style="height:30px;">
+                                <a href="#">个人中心</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1 class="page-header">控制面板</h1>
+
+            <div class="row placeholders">
+                <div class="col-xs-6 col-sm-3 placeholder">
+                    <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail"/>
+                    <h4>Label</h4>
+                    <span class="text-muted">Something else</span>
+                </div>
+                <div class="col-xs-6 col-sm-3 placeholder">
+                    <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail"/>
+                    <h4>Label</h4>
+                    <span class="text-muted">Something else</span>
+                </div>
+                <div class="col-xs-6 col-sm-3 placeholder">
+                    <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail"/>
+                    <h4>Label</h4>
+                    <span class="text-muted">Something else</span>
+                </div>
+                <div class="col-xs-6 col-sm-3 placeholder">
+                    <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail"/>
+                    <h4>Label</h4>
+                    <span class="text-muted">Something else</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../jquery/jquery-2.1.1.min.js"></script>
+<script src="../../bootstrap/js/bootstrap.min.js"></script>
+<script src="../../script/docs.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $(".list-group-item").click(function(){
+            // jquery对象的回调方法中的this关键字为DOM对象
+            // $(DOM) ==> JQuery
+            if ( $(this).find("ul") ) { // 3 li
+                $(this).toggleClass("tree-closed");
+                if ( $(this).hasClass("tree-closed") ) {
+                    $("ul", this).hide("fast");
+                } else {
+                    $("ul", this).show("fast");
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>
