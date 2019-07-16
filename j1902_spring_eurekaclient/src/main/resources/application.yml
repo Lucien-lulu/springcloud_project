@@ -1,0 +1,25 @@
+
+server:
+  port: 10001
+spring:
+  application:
+    name: server-provider
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/xiazhi?characterEncoding=utf-8&serverTimezone=GMT%2B8
+    username: root
+    password:
+    type: com.alibaba.druid.pool.DruidDataSource
+    #分页插件配置
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9090/eureka
+mybatis:
+  mapper-locations: classpath:mapping/*.xml
+  type-aliases-package: com.qf.j1902.pojo
+pagehelper:
+  helper-dialect: mysql
+  support-methods-arguments: true
+  reasonable: true
+

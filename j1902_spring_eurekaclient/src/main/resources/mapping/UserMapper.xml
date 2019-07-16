@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.j1902.mapper.HtuserMapper">
+   <resultMap id="userMap" type="Htuser">
+       <id property="id" column="id"/>
+       <result property="uname" column="uname"/>
+       <result property="upw" column="upw"/>
+       <result property="loginName" column="loginName"/>
+       <result property="typename" column="typename"/>
+       <result property="email" column="email"/>
+       <result property="tel" column="tel"/>
+   </resultMap>
+    <select id="findAll" resultMap="userMap">
+        SELECT *
+        FROM
+        htuser
+    </select>
+    <select id="findAllByTypename" parameterType="string" resultMap="userMap">
+        SELECT *
+        FROM
+        htuser
+        where typename=#{typename}
+    </select>
+    <select id="findAllByKeyword" parameterType="string" resultMap="userMap">
+        SELECT *
+        FROM
+        htuser
+        where CONCAT(uname,loginName,typename)
+        LIKE CONCAT(CONCAT('%', #{keyword}),'%')
+
+    </select>
+    <select id="findUserByName" parameterType="string" resultType="com.qf.j1902.pojo.Htuser">
+        SELECT *
+        FROM htuser
+        where uname=#{uname}
+    </select>
+    <insert id="addUser">
+     INSERT  INTO
+     htuser(uname,upw,loginName,typename,email)
+     VALUES (#{uname},#{upw},#{loginName},#{typename},#{email})
+    </insert>
+    <delete id="delUser">
+        DELETE FROM
+        htuser
+        where id = #{ids}
+    </delete>
+    <update id="updateUser" parameterType="com.qf.j1902.pojo.Htuser">
+        UPDATE  htuser
+        <set>
+            <if test="uname!=null and uname != '' ">
+                uname = #{uname},
+            </if>
+            <if test="email!=null and email != ''">
+                email = #{email},
+            </if>
+            <if test="loginName!=null and loginName != ''">
+                loginName =#{loginName},
+            </if>
+            <if test="typename!=null and typename != ''">
+                typename =#{typename}
+            </if>
+        </set>
+        WHERE  id = #{id}
+    </update>
+    <update id="updatemima" parameterType="string">
+        UPDATE
+        htuser
+        SET
+        upw=#{newpw}
+        WHERE
+        uname=#{uname}
+    </update>
+</mapper>

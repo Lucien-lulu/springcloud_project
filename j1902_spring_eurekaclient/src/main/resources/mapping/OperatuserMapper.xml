@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.j1902.mapper.OperatuserMapper" >
+  <resultMap id="BaseResultMap" type="com.qf.j1902.pojo.Operatuser" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="uname" property="uname" jdbcType="VARCHAR" />
+    <result column="operaTime" property="operatime" jdbcType="TIMESTAMP" />
+    <result column="opratIp" property="opratip" jdbcType="VARCHAR" />
+    <result column="sendTime" property="sendtime" jdbcType="TIMESTAMP" />
+    <result column="utitle" property="utitle" jdbcType="VARCHAR" />
+    <result column="utext" property="utext" jdbcType="VARCHAR" />
+    <result column="linkage" property="linkage" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, uname, operaTime, opratIp, sendTime, utitle, utext, linkage
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.qf.j1902.pojo.OperatuserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from operatuser
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from operatuser
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from operatuser
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qf.j1902.pojo.OperatuserExample" >
+    delete from operatuser
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qf.j1902.pojo.Operatuser" >
+    insert into operatuser (id, uname, operaTime, 
+      opratIp, sendTime, utitle, 
+      utext, linkage)
+    values (#{id,jdbcType=INTEGER}, #{uname,jdbcType=VARCHAR}, #{operatime,jdbcType=TIMESTAMP}, 
+      #{opratip,jdbcType=VARCHAR}, #{sendtime,jdbcType=TIMESTAMP}, #{utitle,jdbcType=VARCHAR}, 
+      #{utext,jdbcType=VARCHAR}, #{linkage,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qf.j1902.pojo.Operatuser" >
+    insert into operatuser
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="uname != null" >
+        uname,
+      </if>
+      <if test="operatime != null" >
+        operaTime,
+      </if>
+      <if test="opratip != null" >
+        opratIp,
+      </if>
+      <if test="sendtime != null" >
+        sendTime,
+      </if>
+      <if test="utitle != null" >
+        utitle,
+      </if>
+      <if test="utext != null" >
+        utext,
+      </if>
+      <if test="linkage != null" >
+        linkage,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uname != null" >
+        #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="operatime != null" >
+        #{operatime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="opratip != null" >
+        #{opratip,jdbcType=VARCHAR},
+      </if>
+      <if test="sendtime != null" >
+        #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="utitle != null" >
+        #{utitle,jdbcType=VARCHAR},
+      </if>
+      <if test="utext != null" >
+        #{utext,jdbcType=VARCHAR},
+      </if>
+      <if test="linkage != null" >
+        #{linkage,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qf.j1902.pojo.OperatuserExample" resultType="java.lang.Integer" >
+    select count(*) from operatuser
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update operatuser
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.uname != null" >
+        uname = #{record.uname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatime != null" >
+        operaTime = #{record.operatime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.opratip != null" >
+        opratIp = #{record.opratip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sendtime != null" >
+        sendTime = #{record.sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.utitle != null" >
+        utitle = #{record.utitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.utext != null" >
+        utext = #{record.utext,jdbcType=VARCHAR},
+      </if>
+      <if test="record.linkage != null" >
+        linkage = #{record.linkage,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update operatuser
+    set id = #{record.id,jdbcType=INTEGER},
+      uname = #{record.uname,jdbcType=VARCHAR},
+      operaTime = #{record.operatime,jdbcType=TIMESTAMP},
+      opratIp = #{record.opratip,jdbcType=VARCHAR},
+      sendTime = #{record.sendtime,jdbcType=TIMESTAMP},
+      utitle = #{record.utitle,jdbcType=VARCHAR},
+      utext = #{record.utext,jdbcType=VARCHAR},
+      linkage = #{record.linkage,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qf.j1902.pojo.Operatuser" >
+    update operatuser
+    <set >
+      <if test="uname != null" >
+        uname = #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="operatime != null" >
+        operaTime = #{operatime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="opratip != null" >
+        opratIp = #{opratip,jdbcType=VARCHAR},
+      </if>
+      <if test="sendtime != null" >
+        sendTime = #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="utitle != null" >
+        utitle = #{utitle,jdbcType=VARCHAR},
+      </if>
+      <if test="utext != null" >
+        utext = #{utext,jdbcType=VARCHAR},
+      </if>
+      <if test="linkage != null" >
+        linkage = #{linkage,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qf.j1902.pojo.Operatuser" >
+    update operatuser
+    set uname = #{uname,jdbcType=VARCHAR},
+      operaTime = #{operatime,jdbcType=TIMESTAMP},
+      opratIp = #{opratip,jdbcType=VARCHAR},
+      sendTime = #{sendtime,jdbcType=TIMESTAMP},
+      utitle = #{utitle,jdbcType=VARCHAR},
+      utext = #{utext,jdbcType=VARCHAR},
+      linkage = #{linkage,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
