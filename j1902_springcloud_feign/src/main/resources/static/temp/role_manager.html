@@ -1,0 +1,40 @@
+<table id="dg" class="easyui-datagrid" style="width:400px;height:250px"
+           data-options="url:'/goroleMmanager',rownumbers:true,fit:true,fitColumns:true,singleSelect:false">
+        <thead>
+        <tr>
+            <th data-options="field:'ch',checkbox:true,width:100"></th>
+            <th data-options="field:'id',width:100,hidden:'true'">ID</th>
+            <th data-options="field:'name',width:100">名称</th>
+            <th data-options="field:'num',width:100">人数</th>
+            <th data-options="field:'operate',width:100,formatter:rowformater">操作</th>
+        </tr>
+        </thead>
+</table>
+
+<script type="text/javascript">
+    function rowformater(value,row,index){
+        return " <button onclick='upUser("+index+")' style=' border: 1px solid #31b0d5;background: #31b0d5'>编辑</button>" +
+            "<button onclick='delUser("+index+")' style='border: 1px solid darksalmon;background: darksalmon;'>删除</button>"+
+            "<button onclick='addUser("+index+")' style='border: 1px solid springgreen;background: springgreen;'>新增</button>";
+    }
+
+
+    function upUser(index){
+        var row=$("#dg").datagrid("getSelected");
+        console.log(row);
+        var id= row.name;
+        console.log("id:::"+id);
+        var jq=top.jQuery;
+        var tab=jq('#wu-tabs').tabs('getTab','编辑角色');
+        if(tab){
+            jq('#wu-tabs').tabs('select','编辑角色');
+        }else {
+            jq('#wu-tabs').tabs('add',{
+                title:'编辑角色',
+                selected:true,
+                closable: true,
+                href:"/goupdateRole?name="+name
+            });
+        }
+    }
+</script>

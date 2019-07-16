@@ -1,0 +1,201 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <link type="text/css" rel="stylesheet" href="../css/demo.css"/>
+    <link type="text/css" rel="stylesheet" href="../css/easyui.css"/>
+    <link type="text/css" rel="stylesheet" href="../css/icon.css"/>
+    <link type="text/css" rel="stylesheet" href="../ /css/lu.css"/>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+</head>
+<body background="../img/backgroudImg.jpg">
+<div style="width: 400px; margin: auto; margin-top: 160px;">
+    <div class="easyui-panel" title="登录" style="width:100%;max-width:400px;padding:30px 60px;">
+        <form id="ff" action="/gologin" method="post">
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" name="userName" value="wl" style="width:100%" data-options="label:'用户名:',required:true">
+            </div>
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" type="password" value="114" name="userPwd" style="width:100%" data-options="label:'密码:',required:true">
+            </div>
+          <!-- <div style="margin-bottom:20px">
+            <input type="text" class="easyui-textbox" style="width:100%" name = "verifyCode" data-options="label:'验证码:',required:true" />
+            <br/><img id="imgCode" src="/getImage" width="118" height="32"/>
+            <a href="javaScript:changeCode();">看不清，再来一张</a>
+            </div>-->
+                <!--<div id="sliderxx">
+                    <div id="slider_bgxx"></div>
+                    <span id="labelxx">&gt;&gt;</span> <span id="labelTipxx">登录</span>
+                </div>-->
+
+        <div style="text-align:center;padding:5px 0">
+            <input href="javascript:void(0)" type="submit" class="easyui-linkbutton"  value="登录" style="width:80px"/>
+            <input href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()" value="取消" style="width:80px"/>
+        </div>
+        </form>
+        <script>
+           /* function submitForm(){
+              window.location.href="/gologin";
+            }*/
+            function clearForm(){
+                $('#ff').form('clear');
+            }
+
+           //更换验证码
+           function changeCode(){
+               var getTimestamp=new Date().getTime();
+               $("#imgCode").attr("src","/getImage?timestamp="+getTimestamp);
+           }
+
+
+           //滑动解锁效果
+           (function($, window, document, undefined) {
+               function SliderUnlock(elm, options, success) {
+                   var me = this;
+                   var $elm = me.checkElm(elm) ? $(elm) : $;
+                   success = me.checkFn(success) ? success : function() {};
+                   var opts = {
+                       successLabelTip: "Successfully Verified",
+                       duration: 200,
+                       swipestart: false,
+                       min: 0,
+                       max: $elm.width(),
+                       index: 0,
+                       IsOk: false,
+                       lableIndex: 0
+                   };
+                   opts = $.extend(opts, options || {});
+                   me.elm = $elm;
+                   me.opts = opts;
+                   me.swipestart = opts.swipestart;
+                   me.min = opts.min;
+                   me.max = opts.max;
+                   me.index = opts.index;
+                   me.isOk = opts.isOk;
+                   me.labelWidth = me.elm.find('#labelxx').width();
+                   me.sliderBg = me.elm.find('#slider_bgxx');
+                   me.lableIndex = opts.lableIndex;
+                   me.success = success;
+               }
+               SliderUnlock.prototype.init = function() {
+                   var me = this;
+                   me.updateView();
+                   me.elm.find("#labelxx").on("mousedown", function(event) {
+                       var e = event || window.event;
+                       me.lableIndex = e.clientX - this.offsetLeft;
+                       me.handerIn();
+                   }).on("mousemove", function(event) {
+                       me.handerMove(event);
+                   }).on("mouseup", function(event) {
+                       me.handerOut();
+                   }).on("mouseout", function(event) {
+                       me.handerOut();
+                   }).on("touchstart", function(event) {
+                       var e = event || window.event;
+                       me.lableIndex = e.originalEvent.touches[0].pageX - this.offsetLeft;
+                       me.handerIn();
+                   }).on("touchmove", function(event) {
+                       me.handerMove(event, "mobile");
+                   }).on("touchend", function(event) {
+                       me.handerOut();
+                   });
+               };
+               SliderUnlock.prototype.handerIn = function() {
+                   var me = this;
+                   me.swipestart = true;
+                   me.min = 0;
+                   me.max = me.elm.width();
+               };
+               SliderUnlock.prototype.handerOut = function() {
+                   var me = this;
+                   me.swipestart = false;
+                   if (me.index < me.max) {
+                       me.reset();
+                   }
+               };
+               SliderUnlock.prototype.handerMove = function(event, type) {
+                   var me = this;
+                   if (me.swipestart) {
+                       event.preventDefault();
+                       event = event || window.event;
+                       if (type == "mobile") {
+                           me.index = event.originalEvent.touches[0].pageX - me.lableIndex;
+                       } else {
+                           me.index = event.clientX - me.lableIndex;
+                       }
+                       me.move();
+                   }
+               };
+               SliderUnlock.prototype.move = function() {
+                   var me = this;
+                   if ((me.index + me.labelWidth) >= me.max) {
+                       me.index = me.max - me.labelWidth - 2;
+                       me.swipestart = false;
+                       me.isOk = true;
+                   }
+                   if (me.index < 0) {
+                       me.index = me.min;
+                       me.isOk = false;
+                   }
+                   if (me.index + me.labelWidth + 2 == me.max && me.max > 0 && me.isOk) {
+                       $('#label').unbind().next('#labelTip').text(me.opts.successLabelTip).css({
+                           'color': '#fff'
+                       });
+                       me.success();
+                   }
+                   me.updateView();
+               };
+               SliderUnlock.prototype.updateView = function() {
+                   var me = this;
+                   me.sliderBg.animate({
+                       'width': me.index
+                   }, 0);
+                   me.elm.find("#labelxx").animate({
+                       "left": me.index + "px"
+                   }, 0)
+               };
+               SliderUnlock.prototype.reset = function() {
+                   var me = this;
+                   me.index = 0;
+                   me.sliderBg.animate({
+                       'width': 0
+                   }, me.opts.duration);
+                   me.elm.find("#labelxx").animate({
+                       left: me.index
+                   }, me.opts.duration).next("#lableTipxx").animate({
+                       opacity: 1
+                   }, me.opts.duration);
+                   me.updateView();
+               };
+               SliderUnlock.prototype.checkElm = function(elm) {
+                   if ($(elm).length > 0) {
+                       return true;
+                   } else {
+                       throw "this element does not exist.";
+                   }
+               };
+               SliderUnlock.prototype.checkFn = function(fn) {
+                   if (typeof fn === "function") {
+                       return true;
+                   } else {
+                       throw "the param is not a function.";
+                   }
+               };
+               window['SliderUnlock'] = SliderUnlock;
+           })(jQuery, window, document);
+
+           $(function() {
+               var slider = new SliderUnlock("#sliderxx", {
+                   successLabelTip: "验证成功"
+               }, function() {
+                   alert("验证成功");
+               });
+               slider.init();
+           })
+        </script>
+    </div>
+</div>
+</body>
+</html>

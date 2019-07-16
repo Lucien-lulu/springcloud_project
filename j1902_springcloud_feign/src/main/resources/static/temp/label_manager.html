@@ -1,0 +1,43 @@
+<div style="margin:20px 0;"></div>
+<div class="easyui-tabs" style="width:700px;height:auto">
+    <div title="系统标签" style="padding:10px">
+             <label>名称：</label><input class="wu-text" name="keyword" style="width:100px">
+            <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="query()">开始检索</a>
+
+        <div id="dgs2" class="easyui-datagrid" data-options="singleSelect:false,pagination:true">
+        <table >
+            <thead>
+            <tr>
+                <th data-options="field:'ch',checkbox:true,width:100"></th>
+                <th data-options="field:'designation',width:100">名称</th>
+                <th data-options="field:'usage',width:100">使用量</th>
+                <th data-options="field:'funct',width:100,formatter:rowformater11">功能</th>
+            </tr>
+            </thead>
+        </table>
+        </div>
+    </div>
+    <div title="用户标签" style="padding:10px">
+        <label>名称：</label><input class="wu-text" name="keyword" style="width:100px">
+        <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="query()">开始检索</a>
+
+        <div id="dgs1" class="easyui-datagrid" data-options="singleSelect:false,pagination:true">
+            <table >
+                <thead>
+                <tr>
+                    <th data-options="field:'ch',checkbox:true,width:100"></th>
+                    <th data-options="field:'designation',width:100">名称</th>
+                    <th data-options="field:'usage',width:100">使用量</th>
+                    <th data-options="field:'funct',width:100,formatter:rowformater1">功能</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    function rowformater11(value,row,index){
+        return " <button onclick='upUser("+index+")' style=' border: 1px solid #31b0d5;background: #31b0d5'>编辑</button>" +
+            "<button onclick='delUser("+index+")' style='border: 1px solid darksalmon;background: darksalmon;'>删除</button>";
+    }
+</script>

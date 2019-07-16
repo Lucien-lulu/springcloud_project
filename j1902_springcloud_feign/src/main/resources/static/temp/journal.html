@@ -1,0 +1,32 @@
+<div class="wu-toolbar-search">
+            <label>操作人员：</label><input class="wu-text" name="keyword" style="width:100px">
+            <label>起始时间：</label><input class="easyui-datetimebox" id="startime" style="width:100px">
+            <label>结束时间：</label><input class="easyui-datetimebox" id="endtime" style="width:100px">
+            <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="query()">开始检索</a>
+</div>
+<table id="dg" class="easyui-datagrid" data-options="url:'/gojournal',toolbar:'#tb' ,fitColumns:true,singleSelect:false,pagination:true">
+    <thead>
+    <tr>
+        <th data-options="field:'ch',checkbox:true,width:100"></th>
+        <th data-options="field:'uname',width:100">操作人员</th>
+        <th data-options="field:'operatime',width:100,formatter:formatOperat">操作时间</th>
+        <th data-options="field:'opratip',width:100">IP</th>
+        <th data-options="field:'remark',width:100">备注</th>
+    </tr>
+    </thead>
+</table>
+<script>
+
+    function query() {
+        $("#dg").datagrid("load",{
+            title: $("[name='keyword']").val(),
+            startime: $('#startime').datebox('getValue'),
+            endtime:  $('#endtime').datebox('getValue')
+        })
+    }
+    function formatOperat(v,r,i){
+        return moment(v).format("YYYY-MM-DD HH:mm:ss");
+    }
+
+</script>
+

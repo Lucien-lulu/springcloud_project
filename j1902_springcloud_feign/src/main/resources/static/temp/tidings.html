@@ -1,0 +1,148 @@
+<!-- Begin of toolbar -->
+   <!-- <div id="wu-toolbar-3">-->
+        <div class="wu-toolbar-search">
+            <label>起始时间：</label><input class="easyui-datetimebox" id="startidings" style="width:100px">
+            <label>结束时间：</label><input class="easyui-datetimebox" id="endtidings" style="width:100px">
+            <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="query()">开始检索</a>
+        </div>
+        <table id="dgs" class="easyui-datagrid" data-options="url:'/gotidings',toolbar:'#tb',rownumbers:true,fitColumns:true,singleSelect:true,pagination:true">
+            <thead>
+            <tr>
+                <th data-options="field:'id',width:100,hidden:'true'">ID</th>
+                <th data-options="field:'utitle',width:100">标题</th>
+                <th data-options="field:'sendtime',width:100,formatter:formatsendTime">发送时间</th>
+                <th data-options="field:'uname',width:100">发送人</th>
+                <th data-options="field:'operate',width:100,formatter:rowformater">操作&nbsp; <button onclick="addtid()" style=' border: 1px solid #269abc;'>新增消息</button>  </th>
+            </tr>
+            </thead>
+        </table>
+   <!-- </div>-->
+<!-- End of toolbar -->
+<table id="wu-datagrid-3" class="easyui-datagrid" toolbar="#wu-toolbar-3"></table>
+<!-- Begin of easyui-dialog -->
+<div id="wu-dialog-3" class="easyui-dialog" data-options="closed:true,iconCls:'icon-save'" style="width:400px; padding:10px;">
+    <form id="wu-form-3" method="post" >
+        <table>
+            <tr>
+                <input type="hidden" name="id" class="wu-text" />
+                <td width="60" align="right">标 题:</td>
+                <td><input type="text" name="utitle" class="wu-text" /></td>
+            </tr>
+            <tr>
+                <td align="right">系统内容:</td>
+                <td><input type="text" name="utext" class="wu-text" /></td>
+            </tr>
+            <tr>
+                <td align="right">链接地址:</td>
+                <td><input type="text" name="linkage" class="wu-text" /></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<!-- End of easyui-dialog -->
+
+
+<script>
+
+    function formatsendTime(v,r,i){
+        return moment(v).format("YYYY-MM-DD HH:mm:ss");
+    }
+
+    function rowformater(value,row,index){
+        return " <button onclick='sendtid("+index+")' style=' border: 1px solid springgreen;background: springgreen'>发送</button>" +
+            "<button onclick='openuptid("+index+")' style='border: 1px solid #31b0d5;background: #31b0d5;'>编辑</button>"+
+            "<button onclick='deltid("+index+")' style='border: 1px solid darksalmon;background: darksalmon;'>删除</button>";
+    }
+
+    //添加
+    function addtid(){
+        /*var rows=$("#dg").datagrid("getRows");
+         var id= rows[index].id;
+         var jq=top.jQuery;*/
+        var tab=$('#wu-tabs').tabs('getTab','新增系统消息');
+        if(tab){
+            $('#wu-tabs').tabs('select','新增系统消息');
+        }else {
+            $('#wu-tabs').tabs('add',{
+                title:'新增系统消息',
+                selected:true,
+                closable: true,
+                href:"/goaddtidings"
+            });
+        }
+    }
+
+    //修改
+    function openuptid(index) {
+        $('#wu-form-3').form('clear');
+        var rows = $("#dgs").datagrid("getRows");
+       /* var id=rows[index].id;*/
+        var data=rows[index];  //获取选择行的对象
+        console.log(data);
+      /*  $('#aa').val(id);*/
+        $('#wu-form-3').form('load', data);  //获取选择行的对象,将其重新填到dialog框里
+        $('#wu-dialog-3').dialog({
+            closed: false,
+            model:true,
+            title:'修改信息',
+            buttons:[{text:"确定",
+                iconCls: 'icon-ok',
+                handler: edit
+            }, {
+                text: '取消',
+                iconCls: 'icon-cancel',
+                handler: function () {
+                    $('#wu-dialog-3').dialog('close');
+                }
+            }]
+        });
+        function edit(){
+            $('#wu-form-3').form('submit', {
+                url:'/updatetidings',
+                success:function(data){
+                    if(data){
+                        $.messager.alert('信息提示','提交成功！','info');
+                        $('#wu-dialog-3').dialog('close');
+                        $("#dgs").datagrid('reload');   //更改后，重新加载一遍，刷新更改的数据
+                    } else {
+                        $.messager.alert('信息提示','提交失败！','info');
+                    }
+                }
+            });
+        }
+    }
+
+    //删除
+    function deltid(index){
+        var rows = $("#dgs").datagrid("getRows");
+        var idv=rows[index].id;  //要删除的operatuser表的id值
+       /* alert(idv);*/
+        $.messager.confirm('信息提示','确定要删除该记录？', function(result){
+            if(result){
+                if(idv){
+                    $.ajax({
+                        url:'/deltidings',
+                        data:{idv:idv},
+                        success:function(data){
+                            if(data){
+                                $.messager.alert('信息提示','删除成功！','info');
+                                $("#wu-datagrid-2").datagrid('deleteRow',index);
+                                $("#dgs").datagrid('reload');
+                            } else {
+                                $.messager.alert('信息提示','删除失败！','info');
+                            }
+                        }
+                    });
+                }else{
+                    $.messager.alert('警告','请先选择删除的行！');
+                }
+            }
+        });
+    }
+
+
+
+
+
+
+</script>
